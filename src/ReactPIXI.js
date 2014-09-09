@@ -21,7 +21,7 @@
 
 "use strict";
 
-var React = require('react/react.js');
+//var React = require('react/react.js');
 
 var DOMPropertyOperations = require('react/lib/DOMPropertyOperations');
 var ReactComponent = require('react/lib/ReactComponent');
@@ -32,13 +32,9 @@ var ReactBrowserComponentMixin = require('react/lib/ReactBrowserComponentMixin')
 var ReactDescriptor = require('react/lib/ReactDescriptor');
 var ReactDOMComponent = require('react/lib/ReactDOMComponent');
 var ReactComponentMixin = ReactComponent.Mixin;
-//var ReactCompositeComponent = require('react/lib/ReactCompositeComponent');
 
 var mixInto = require('react/lib/mixInto');
 var merge = require('react/lib/merge');
-var shouldUpdateReactComponent = require('react/lib/shouldUpdateReactComponent');
-var instantiateReactComponent = require ('react/lib/instantiateReactComponent');
-var invariant = require('react/lib/invariant');
 
 //
 // Generates a React component by combining several mixin components
@@ -207,7 +203,7 @@ var StageMixin = merge(DisplayObjectContainerMixin, {
 
 
 //
-// The 'Stage' component includes both the pixi.js stage and
+// The 'Stage' component includes both7 the pixi.js stage and
 // the canvas DOM element that pixi renders onto.
 //
 // Maybe split these into two components? Putting a DOM node and a pixi DisplayObject into
@@ -225,8 +221,12 @@ var PIXIStage = definePIXIComponent(
   StageMixin, {
 
   mountComponent: function(rootID, transaction, mountDepth) {
-    /* jshint unused: vars */
-    ReactComponentMixin.mountComponent.apply(this, arguments);
+    ReactComponentMixin.mountComponent.call(
+      this,
+      rootID,
+      transaction,
+      mountDepth
+    );
     transaction.getReactMountReady().enqueue(this.componentDidMount, this);
     // Temporary placeholder
     var idMarkup = DOMPropertyOperations.createMarkupForID(rootID);
@@ -347,8 +347,8 @@ var PIXIStage = definePIXIComponent(
 //
 
 var CommonDisplayObjectContainerImplementation = {
-  mountComponent: function(rootID, transaction, mountDepth) {
-    /* jshint unused: vars */
+
+  mountComponent: function(transaction) {
     ReactComponentMixin.mountComponent.apply(this, arguments);
     this.displayObject = this.createDisplayObject(arguments);
     this.applyDisplayObjectProps({}, this.props);
@@ -547,8 +547,7 @@ var BitmapText = definePIXIComponent(
 //
 
 var CustomDisplayObjectContainerImplementation = {
-  mountComponent: function(rootID, transaction, mountDepth) {
-    /* jshint unused: vars */
+  mountComponent: function(transaction) {
     ReactComponentMixin.mountComponent.apply(this, arguments);
     this.displayObject = this.customDisplayObject(arguments);
     this.applyDisplayObjectProps({}, this.props);
@@ -581,108 +580,6 @@ var CustomPIXIComponent = function (custommixin) {
     custommixin);
 };
 
-//
-// Composite components don't have a displayObject. So we have to do some work to find
-// the proper displayObject sometimes.
-//
-
-function findDisplayObjectAncestor(componentinstance) {
-  // walk up via _owner until we find something with a displayObject hasOwnProperty
-  var componentwalker = componentinstance._descriptor._owner;
-  while (typeof componentwalker !== 'undefined') {
-    // no owner? then fail
-    if (typeof componentwalker._renderedComponent.displayObject !== 'undefined') {
-      return componentwalker._renderedComponent.displayObject;
-    }
-    componentwalker = componentwalker._descriptor._owner;
-  }
-
-  // we walked all the way up and found no displayObject
-  return undefined;
-}
-
-function findDisplayObjectChild(componentinstance) {
-  // walk downwards via _renderedComponent to find something with a displayObject
-  // walk up via _owner until we find something with a displayObject hasOwnProperty
-  var componentwalker = componentinstance;
-  while (typeof componentwalker !== 'undefined') {
-    // no owner? then fail
-    if (typeof componentwalker.displayObject !== 'undefined') {
-      return componentwalker.displayObject;
-    }
-    componentwalker = componentwalker._renderedComponent;
-  }
-
-  // we walked all the way up and found no displayObject
-  return undefined;
-
-}
-
-//
-// time to monkey-patch React!
-//
-// a subtle bug happens when ReactCompositeComponent updates something in-place by
-// modifying HTML markup; since PIXI objects don't exist as markup the whole thing bombs.
-// we try to fix this by monkey-patching ReactCompositeComponent
-//
-
-function createPIXIClass(spec) {
-
-  var patchedspec = merge(spec, {
-    updateComponent : function(transaction, prevParentDescriptor) {
-      ReactComponent.Mixin.updateComponent.call(
-        this,
-        transaction,
-        prevParentDescriptor
-      );
-
-      var prevComponentInstance = this._renderedComponent;
-      var prevDescriptor = prevComponentInstance._descriptor;
-      var nextDescriptor = this._renderValidatedComponent();
-
-      if (shouldUpdateReactComponent(prevDescriptor, nextDescriptor)) {
-        prevComponentInstance.receiveComponent(nextDescriptor, transaction);
-      } else {
-        // We can't just update the current component.
-        // So we nuke the current instantiated component and put a new component in
-        // the same place based on the new props.
-        var rootID = this._rootNodeID;
-
-        var prevDisplayObject = findDisplayObjectChild(this._renderedComponent);
-        var displayObjectParent = prevDisplayObject.parent;
-
-        if ("production" !== process.env.NODE_ENV) { // jshint ignore:line
-          // this should produce the parent as well
-          var displayObjectAncestor = findDisplayObjectAncestor(this);
-          invariant(displayObjectAncestor === displayObjectParent,
-                   'displayObject found by following _owner fields should match displayObject parent');
-        }
-
-        // unparent the current DisplayObject from its parent
-        var displayObjectIndex = displayObjectParent.children.indexOf(prevDisplayObject);
-        prevComponentInstance.unmountComponent();
-        displayObjectParent.removeChild(prevDisplayObject);
-        this.displayObject = null;
-
-        // create the new object and stuff it into the place vacated by the old object
-        this._renderedComponent = instantiateReactComponent(nextDescriptor);
-        var nextDisplayObject = this._renderedComponent.mountComponent(
-          rootID,
-          transaction,
-          this._mountDepth + 1
-        );
-        this.displayObject = nextDisplayObject;
-        displayObjectParent.addChildAt(nextDisplayObject, displayObjectIndex);
-      }
-    }
-  });
-
-  /* jshint validthis: true */
-  var newclass = React.createClass.call(this, patchedspec);
-  return newclass;
-
-}
-
 // module data
 
 module.exports =  {
@@ -692,6 +589,5 @@ module.exports =  {
   Text: Text,
   BitmapText : BitmapText,
   TilingSprite: TilingSprite,
-  CreateCustomPIXIComponent : CustomPIXIComponent,
-  createClass: createPIXIClass,
+  CreateCustomPIXIComponent : CustomPIXIComponent
 };
