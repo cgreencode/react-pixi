@@ -59,7 +59,7 @@ basic ReactPIXI components. For example, to construct
 var Sprite = React.createFactory(ReactPIXI.Sprite);
 var DisplayObjectContainer = React.createFactory(ReactPIXI.DisplayObjectContainer);
 
-var CupcakeComponent = React.createClass({
+var CupcakeComponent = ReactPIXI.createClass({
   displayName: 'CupcakeComponent',
   // maps from cupcake toppings to the appropriate sprite
   spritemapping : {
