@@ -7,6 +7,8 @@ Create/control a [Pixi.js](https://github.com/GoodBoyDigital/pixi.js) canvas usi
 
 To control a 3D scene with React, see [react-three](https://github.com/Izzimach/react-three/)
 
+![Applying blur with a PIXI filter](docs/blurexample.png)
+
 ## Install Via Bower
 
 If you just want to use react-pixi and not build it, you can
@@ -47,6 +49,8 @@ gulp
 
 Will package up react-pixi along with React and put the result in build/react-pixi.js, which you can include in your web page.
 
+
+
 ## Rendering Pixi.js elements
 
 To render Pixi.js elements like a Stage or Sprite you reference them like other
@@ -59,7 +63,7 @@ basic ReactPIXI components. For example, to construct
 var Sprite = React.createFactory(ReactPIXI.Sprite);
 var DisplayObjectContainer = React.createFactory(ReactPIXI.DisplayObjectContainer);
 
-var CupcakeComponent = ReactPIXI.createClass({
+var CupcakeComponent = React.createClass({
   displayName: 'CupcakeComponent',
   // maps from cupcake toppings to the appropriate sprite
   spritemapping : {
