@@ -1,6 +1,6 @@
 {
   "name": "react-pixi",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Construct PIXI.js scenes using React",
   "keywords": [
     "react",
@@ -30,7 +30,7 @@
     "object-assign": "^4.0.1"
   },
   "peerDependencies": {
-    "pixi.js": "~3.0.7",
+    "pixi.js": "^4.0.0",
     "react": "^15.0.0",
     "react-dom": "^15.0.0"
   },
@@ -63,14 +63,14 @@
   },
   "scripts": {
     "build": "webpack",
+    "build-examples": "webpack --config webpack-examples.config.js",
     "build-commonjs": "webpack --config webpack-commonjs.config.js",
     "dev": "webpack-dev-server --progress --colors",
-    "examples": "webpack-dev-server --config webpack-examples.config.js",
     "lint": "eslint src examples",
     "test": "karma start",
     "pixelrefs": "slimerjs test/pixels/generatetestrender.js",
     "pretest": "npm run build",
-    "preexamples": "npm run build",
+    "predev": "npm run build-examples",
     "prerendertest": "npm run build",
     "prepublish": "npm run build-commonjs"
   },

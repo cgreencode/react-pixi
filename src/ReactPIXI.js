@@ -296,27 +296,19 @@ var PIXIStage = React.createClass({
 
   generateDefaultRenderer: function(props) {
     // standard canvas/webGL renderer
-    const renderelement = ReactDOM.findDOMNode(this);
+    var renderelement = ReactDOM.findDOMNode(this);
 
-    let backgroundColor = (typeof props.backgroundColor === "number") ? props.backgroundColor : 0x66ff99;
-    // check for old-style capitalization (or lack of for backgroundColor)
-    if (typeof props.backgroundcolor !== 'undefined')
-    {
-      warning(false, "Using lowercase on Stage prop backgroundcolor is deprecated - use backgroundColor instead");
-      backgroundColor = props.backgroundcolor;
-    }
-    const resolution = (typeof props.resolution === "number") ? props.resolution : 1;
-    const antialias = props.antialias ? props.antialias : false;
-    const transparent = props.transparent ? props.transparent : false;
-    const preserveDrawingBuffer = props.preserveDrawingBuffer ? props.preserveDrawingBuffer : false;
+    var backgroundcolor = (typeof props.backgroundcolor === "number") ? props.backgroundcolor : 0x66ff99;
+    var resolution = (typeof props.resolution === "number") ? props.resolution : 1;
+    var antialias = props.antialias ? props.antialias : false;
+    var transparent = props.transparent ? props.transparent : false;
+    var preserveDrawingBuffer = props.preserveDrawingBuffer ? props.preserveDrawingBuffer : false;
     
     this._pixirenderer = PIXI.autoDetectRenderer(props.width, props.height, 
       {view:renderelement,
-       backgroundColor: backgroundColor, 
+       backgroundColor: backgroundcolor, 
        antialias: props.antialias,
-       transparent: transparent,
-       resolution: props.resolution,
-       preserveDrawingBuffer: preserveDrawingBuffer
+       resolution: props.resolution	
       });
   },
 
@@ -411,15 +403,8 @@ var PIXIStage = React.createClass({
 
   render: function() {
     // the PIXI renderer will get applied to this canvas element unless there is a custom renderer
-    if (typeof this.props.renderer === 'undefined') {
-      if (typeof this.props.style === 'undefined') {
-        // no style props, use a default canvas
-        return React.createElement("canvas");
-      }
-      else
-      {
-        return React.createElement("canvas", {style: this.props.style});
-      }
+    if (typeof this.props.renderer == 'undefined') {
+      return React.createElement("canvas");
     } else {
       return null;
     }
