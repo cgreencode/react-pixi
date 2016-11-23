@@ -1,6 +1,6 @@
 {
   "name": "react-pixi",
-  "version": "0.8.3",
+  "version": "0.9.2",
   "description": "Construct PIXI.js scenes using React",
   "keywords": [
     "react",
@@ -31,9 +31,9 @@
     "object-assign": "^4.0.1"
   },
   "peerDependencies": {
-    "pixi.js": "^4.0.0",
-    "react": "^15.0.0",
-    "react-dom": "^15.0.0"
+    "pixi.js": "~4.0.0",
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
@@ -54,8 +54,8 @@
     "lodash": "^4.6.1",
     "node-static": "~0.7.3",
     "pixi.js": "~4.0.0",
-    "react": "^15.2.1",
-    "react-dom": "^15.2.1",
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0",
     "resemblejs": "~2.2.0",
     "rimraf": "~2.5.0",
     "transform-loader": "^0.2.3",
@@ -64,14 +64,14 @@
   },
   "scripts": {
     "build": "webpack",
-    "build-examples": "webpack --config webpack-examples.config.js",
     "build-commonjs": "webpack --config webpack-commonjs.config.js",
     "dev": "webpack-dev-server --progress --colors",
+    "examples": "webpack-dev-server --config webpack-examples.config.js",
     "lint": "eslint src examples",
     "test": "karma start",
     "pixelrefs": "slimerjs test/pixels/generatetestrender.js",
     "pretest": "npm run build",
-    "predev": "npm run build-examples",
+    "preexamples": "npm run build",
     "prerendertest": "npm run build",
     "prepublish": "npm run build-commonjs"
   },

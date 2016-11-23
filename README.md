@@ -1,8 +1,6 @@
 react-pixi
 ==========
 
-[![Build Status](https://travis-ci.org/Izzimach/react-pixi.svg?branch=master)](https://travis-ci.org/Izzimach/react-pixi)
-
 Create/control a [Pixi.js](https://github.com/GoodBoyDigital/pixi.js) canvas using [React](https://github.com/facebook/react).
 
 To control a 3D scene with React, see [react-three](https://github.com/Izzimach/react-three/)
@@ -11,7 +9,7 @@ To control a 3D scene with React, see [react-three](https://github.com/Izzimach/
 
 ## Install Via NPM
 
-The current version of react-pixi is `0.8.0` and uses React `15.0.0`.
+The current version of react-pixi is `0.9.0` and uses React `15.0.0` and PIXI `4.0.0`
 
 If you just want to use react-pixi and not build it, you can
 install it using npm.
@@ -46,11 +44,9 @@ npm run build
 ```
 
 will build and package the code into `build/react-pixi.js`. You can include
-this in your web page and reference `React`, `ReactPIXI` as globals. Note that you
-still need to include pixi.js yourself (taken from the cupcake example):
+this in your web page and reference `React`, `ReactPIXI` as globals.
 
 ```
-<script src="../../node_modules/pixi.js/bin/pixi.js"></script>
 <script src="../../build/react-pixi.js"></script>
 ```
 
@@ -63,7 +59,7 @@ Doing so might give wierd results!
 The examples are in `examples/` and you can view them by running a webpack dev server.
 
 ```
-npm run dev
+npm run examples
 ```
 
 Then browse to `http://localhost:8080`
@@ -134,6 +130,19 @@ var ExampleStage = React.createClass({
   }
 });
 ```
+## Setting values for Point and ObservablePoint types
+
+For setting properties on Pixi.js types that are either `PIXI.Point`'s or
+`PIXI.ObserveablePoint`'s you can use either and array of integers or a
+comma-separated string of integers in the following forms: `[x,y]`, `'x,y'`,
+`[i]`, `'i'`. In the case where two integers are provided, the first will be
+applied to the _X_ coordinate and the second will be applied to the _Y_
+coordinate. In the case where a single integer if provided, it will be applied
+to both coordinates.
+
+You can still create your own PIXI `Point` or `ObserveablePoint` objects and
+assign them directly to the property. These won't actually replace the property
+but they will be applied using the original object's `.copy()` method.
 
 ## Testing
 
