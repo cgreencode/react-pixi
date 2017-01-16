@@ -1,6 +1,6 @@
 {
   "name": "react-pixi",
-  "version": "0.9.5",
+  "version": "0.9.4",
   "description": "Construct PIXI.js scenes using React",
   "keywords": [
     "react",
@@ -23,6 +23,7 @@
     "es5",
     "src"
   ],
+  "types": "react-pixi.d.ts",
   "main": "es5/react-pixi-commonjs.js",
   "dependencies": {
     "brfs": "^1.4.1",
