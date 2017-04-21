@@ -78,9 +78,6 @@ function parsePoint(val) {
     // shallow copy the array
     arr = val.slice();
   }
-  else if ("x" in val) {
-    arr = [val.x, val.y];
-  }
 
   return arr;
 }
@@ -306,7 +303,7 @@ var DisplayObjectContainerMixin = assign({}, DisplayObjectMixin, ReactMultiChild
         i++;
       }
     }
-  }
+  },
 
 });
 
@@ -371,10 +368,10 @@ var PIXIStage = React.createClass({
     const antialias = props.antialias ? props.antialias : false;
     const transparent = props.transparent ? props.transparent : false;
     const preserveDrawingBuffer = props.preserveDrawingBuffer ? props.preserveDrawingBuffer : false;
-
-    this._pixirenderer = PIXI.autoDetectRenderer(props.width, props.height,
+    
+    this._pixirenderer = PIXI.autoDetectRenderer(props.width, props.height, 
       {view:renderelement,
-       backgroundColor: backgroundColor,
+       backgroundColor: backgroundColor, 
        antialias: props.antialias,
        transparent: transparent,
        resolution: props.resolution,
@@ -746,6 +743,12 @@ var BitmapTextComponentMixin = {
     // should do a deep compare here
     if (typeof newProps.style !== 'undefined' && newProps.style !== oldProps.style) {
       displayObject.style = newProps.style;
+      if (typeof oldProps.style === 'undefined' || newProps.style.font !== oldProps.style.font) {
+        let font = newProps.style.font.split(' ')
+        displayObject.font.name = font[1]
+        displayObject.font.size = parseInt(font[0], 10)
+        displayObject.updateText()
+      }
     }
 
     this.transferDisplayObjectPropsByName(oldProps, newProps,
