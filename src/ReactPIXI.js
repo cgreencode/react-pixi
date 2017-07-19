@@ -373,28 +373,18 @@ var PIXIStage = React.createClass({
       warning(false, "Using lowercase on Stage prop backgroundcolor is deprecated - use backgroundColor instead");
       backgroundColor = props.backgroundcolor;
     }
-    const transparent = props.transparent ? props.transparent : false;
-    const antialias = props.antialias ? props.antialias : false;
-    const preserveDrawingBuffer = props.preserveDrawingBuffer ? props.preserveDrawingBuffer : false;
     const resolution = (typeof props.resolution === "number") ? props.resolution : 1;
-    const forceCanvas = props.forceCanvas ? props.forceCanvas : false;
-    const roundPixels = props.roundPixels ? props.roundPixels : false;
-    const forceFXAA = props.forceFXAA ? props.forceFXAA : false;
-    const legacy = props.legacy ? props.legacy : false;
+    const antialias = props.antialias ? props.antialias : false;
+    const transparent = props.transparent ? props.transparent : false;
+    const preserveDrawingBuffer = props.preserveDrawingBuffer ? props.preserveDrawingBuffer : false;
 
-    this._pixirenderer = PIXI.autoDetectRenderer({
-       width: props.width,
-       height: props.height,
-       view:renderelement,
+    this._pixirenderer = PIXI.autoDetectRenderer(props.width, props.height,
+      {view:renderelement,
        backgroundColor: backgroundColor,
+       antialias: props.antialias,
        transparent: transparent,
-       antialias: antialias,
-       preserveDrawingBuffer: preserveDrawingBuffer,
-       resolution: resolution,
-       forceCanvas: forceCanvas,
-       roundPixels: roundPixels,
-       forceFXAA: forceFXAA,
-       legacy: legacy
+       resolution: props.resolution,
+       preserveDrawingBuffer: preserveDrawingBuffer
       });
   },
 
