@@ -7,7 +7,7 @@
 function drawTestRenders(mountpoint, testimages) {
   var halfanchor = new PIXI.Point(0.5,0.5);
 
-  var SpriteTestComponent = createReactClass({
+  var SpriteTestComponent = React.createClass({
     displayName:'SpriteTextComponent',
     render: function () {
       return React.createElement(ReactPIXI.Stage,

@@ -9,9 +9,9 @@
 // tell jshint that we use lodash
 /* global _ : false */
 /* global React : false */
+/* global PropTypes : false */
 /* global ReactPIXI : false */
 /* global PIXI : false */
-/* global createReactClass : false */
 /* jshint strict: false */
 
 var Stage = React.createFactory(ReactPIXI.Stage);
@@ -89,7 +89,7 @@ function removeSpriteById(spriteid) {
 // Component to hold a clickable sprite 'button'. click on this 'button' to add a sprite
 //
 
-var SpriteAppButtons = createReactClass({
+var SpriteAppButtons = React.createClass({
   displayName:'SpriteAppButtons',
   render: function() {
     return DisplayObjectContainer(
@@ -105,10 +105,10 @@ var SpriteAppButtons = createReactClass({
 // Component to display all the dynamic sprites
 //
 
-var DynamicSprites = createReactClass({
+var DynamicSprites = React.createClass({
   displayName:'DynamicSprites',
   propTypes: {
-    sprites: React.PropTypes.arrayOf(React.PropTypes.object)
+    sprites: PropTypes.arrayOf(PropTypes.object)
   },
   render: function() {
     var args = [{}];
@@ -129,13 +129,13 @@ var DynamicSprites = createReactClass({
 // - x,y are the point to spin around
 // - spinspeed is the rotation speed in radians/sec
 // - spinme is a ReactElement to spin
-var SpinElement = createReactClass({
+var SpinElement = React.createClass({
   displayName: 'SpinElement',
   propTypes: {
-    x: React.PropTypes.number.isRequired,
-    y: React.PropTypes.number.isRequired,
-    spinspeed: React.PropTypes.number.isRequired,
-    spinme: React.PropTypes.object.isRequired
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    spinspeed: PropTypes.number.isRequired,
+    spinme: PropTypes.object.isRequired
   },
 
   getInitialState: function() {
@@ -181,7 +181,7 @@ var SpinElement = createReactClass({
 // - sprites: a list of objects describing all the current sprites containing x,y and image fields
 //
 
-var SpriteApp = createReactClass({
+var SpriteApp = React.createClass({
   displayName: 'BunchOfSprites',
   render: function() {
     var halfwidth = this.props.width/2;

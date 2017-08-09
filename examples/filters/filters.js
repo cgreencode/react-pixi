@@ -4,9 +4,9 @@
 
 /* jshint strict: false */
 /* global React : false */
+/* global PropTypes : false */
 /* global ReactPIXI : false */
 /* global PIXI : false */
-/* global createReactClass : false */
 
 var assetpath = function(filename) { return '../assets/' + filename; };
 
@@ -25,7 +25,7 @@ var BitmapText = React.createFactory(ReactPIXI.BitmapText);
 // - cream : type of cupcake topping. any of the keys listed in spritemapping
 //
 
-var CupcakeComponent = createReactClass({
+var CupcakeComponent = React.createClass({
   displayName: 'CupcakeComponent',
   // maps from cupcake toppings to the appropriate sprite
   spritemapping : {
@@ -35,8 +35,8 @@ var CupcakeComponent = createReactClass({
     'pink' : assetpath('creamPink.png'),
   },
   propTypes: {
-    xposition: React.PropTypes.number.isRequired,
-    topping: React.PropTypes.string.isRequired,
+    xposition: PropTypes.number.isRequired,
+    topping: PropTypes.string.isRequired,
   },
 
   render : function () {
@@ -61,16 +61,16 @@ var CupcakeFactory = React.createFactory(CupcakeComponent);
 // - bluramount: 0=no blur, 2=a bit fuzzy, 10+ is mostly obscured
 //
 
-var BlurredCupcakeComponent = createReactClass({
+var BlurredCupcakeComponent = React.createClass({
   displayName: "BlurredCupcakeComponent",
   getInitialState : function() {
     return { cupcakefilter : new PIXI.filters.BlurFilter() };
   },
 
   propTypes: {
-    xposition: React.PropTypes.number.isRequired,
-    topping: React.PropTypes.string.isRequired,
-    bluramount: React.PropTypes.number.isRequired
+    xposition: PropTypes.number.isRequired,
+    topping: PropTypes.string.isRequired,
+    bluramount: PropTypes.number.isRequired
   },
 
   render : function() {
@@ -97,7 +97,7 @@ var BlurredCupcakeFactory = React.createFactory(BlurredCupcakeComponent);
 // - xposition: x position in pixels that governs where the elements are placed
 //
 
-var ExampleStage = createReactClass({
+var ExampleStage = React.createClass({
   displayName: 'ExampleStage',
   render: function() {
     // draw two cupcakes each at different positions

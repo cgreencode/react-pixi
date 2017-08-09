@@ -6,14 +6,13 @@
 /* global React : false */
 /* global ReactPIXI : false */
 /* global PIXI : false */
-/* global createReactClass : false */
 
 var assetpath = function(filename) { return '../assets/' + filename; };
 
 var Stage = React.createFactory(ReactPIXI.Stage);
 var VectorText = React.createFactory(ReactPIXI.Text);
 
-var CustomRenderStage = createReactClass({
+var CustomRenderStage = React.createClass({
   displayName: 'CustomRenderStage',
   render: function() {
     return Stage(

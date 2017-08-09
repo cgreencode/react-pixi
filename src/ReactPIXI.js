@@ -25,7 +25,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createReactClass from 'create-react-class';
 import * as PIXI from 'pixi.js';
 
 import ReactMultiChild from 'react-dom/lib/ReactMultiChild';
@@ -341,7 +340,7 @@ var DisplayObjectContainerMixin = assign({}, DisplayObjectMixin, ReactMultiChild
 // --GJH
 //
 
-var PIXIStage = createReactClass({
+var PIXIStage = React.createClass({
   displayName: 'PIXIStage',
   mixins: [DisplayObjectContainerMixin],
 

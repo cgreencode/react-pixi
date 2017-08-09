@@ -4,9 +4,9 @@
 
 /* jshint strict: false */
 /* global React : false */
+/* global PropTypes : false */
 /* global ReactPIXI : false */
 /* global PIXI : false */
-/* global createReactClass : false */
 
 var assetpath = function(filename) { return '../assets/' + filename; };
 
@@ -25,7 +25,7 @@ var BitmapText = React.createFactory(ReactPIXI.BitmapText);
 // - cream : type of cupcake topping. any of the keys listed in spritemapping
 //
 
-var CupcakeComponent = createReactClass({
+var CupcakeComponent = React.createClass({
   displayName: 'CupcakeComponent',
   // maps from cupcake toppings to the appropriate sprite
   spritemapping : {
@@ -36,8 +36,8 @@ var CupcakeComponent = createReactClass({
   },
 
   propTypes: {
-    xposition: React.PropTypes.number.isRequired,
-    topping: React.PropTypes.string.isRequired,
+    xposition: PropTypes.number.isRequired,
+    topping: PropTypes.string.isRequired,
   },
 
   render : function () {
@@ -59,7 +59,7 @@ var CupcakeFactory = React.createFactory(CupcakeComponent);
 // - xposition: x position in pixels that governs where the elements are placed
 //
 
-var ExampleStage = createReactClass({
+var ExampleStage = React.createClass({
   displayName: 'ExampleStage',
   getInitialState: function() {
     return {backgroundX: 0, backgroundY: 0, scrollcallback:null};

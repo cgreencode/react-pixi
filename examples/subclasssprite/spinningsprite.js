@@ -8,7 +8,6 @@
 /* global React : false */
 /* global ReactPIXI : false */
 /* global PIXI : false */
-/* global createReactClass : false */
 
 var assetpath = function(filename) { return '../assets/' + filename; };
 
@@ -77,7 +76,7 @@ var SpinningSpriteComponent = ReactPIXI.CustomPIXIComponent({
 // - spinx,spiny,spinrotation : parameters passed to the spinning sprite
 //
 
-var SpinStage = createReactClass({
+var SpinStage = React.createClass({
   displayName: 'ExampleStage',
   render: function() {
     var child = React.createElement(SpinningSpriteComponent,

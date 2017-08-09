@@ -11,7 +11,6 @@
 /* global React : false */
 /* global ReactPIXI : false */
 /* global pixelTests : false */
-/* global createReactClass : false */
 /* jshint strict: false */
 
 // the mounted instance will go here, so that callbacks can modify/set it
@@ -27,7 +26,7 @@ var g_applicationstate = {};
 // - sprites: a list of objects describing all the current sprites containing x,y and image fields
 //
 
-var PixelRefs = createReactClass({
+var PixelRefs = React.createClass({
   displayName: 'PixelRefs',
   render: function() {
     var testimageelements = _.map(this.props.testimageURLs, function(imageURL) {

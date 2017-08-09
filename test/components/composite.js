@@ -18,7 +18,7 @@ describe("PIXI Composite components", function() {
     // will update in-place and then updateComponent in ReactCompositeComponentMixin will try to nuke and replace the child
     // component since the keys don't match.
     //
-    var injectedKeyComponent = createReactClass({
+    var injectedKeyComponent = React.createClass({
       displayName: 'injectedKeyComponent',
       render: function () {
         var propswithkey = _.clone(this.props);
@@ -28,9 +28,9 @@ describe("PIXI Composite components", function() {
     });
     var injectedKeyFactory = React.createFactory(injectedKeyComponent);
 
-    // note we use createReactClass, not ReactPIXI.createClass, since the Stage
+    // note we use React.createClass, not ReactPIXI.createClass, since the Stage
     // is actually a <canvas> DOM element!
-    var injectedKeyStage = createReactClass({
+    var injectedKeyStage = React.createClass({
       displayName: 'injectedKeyStage',
       render: function () {
         return Stage({width:this.props.width, height:this.props.height, ref:'stage'},
@@ -82,7 +82,7 @@ describe("PIXI Composite components", function() {
     // thing to the parallel tree used by PIXI. But since the composite
     // itself itsn't part of PIXI scene graph this can get tricky.
     // see issue #7
-    var changedChildComponent = createReactClass({
+    var changedChildComponent = React.createClass({
       displayName:'changeChildComponent',
       render: function () {
         var compositechild = this.props.renderstate;
@@ -93,7 +93,7 @@ describe("PIXI Composite components", function() {
         }
       }
     });
-    var changedChildStageFactory = React.createFactory(createReactClass({
+    var changedChildStageFactory = React.createFactory(React.createClass({
       render: function() {
         return Stage({width:300,height:300,ref:'stage'},
           React.createElement(changedChildComponent, this.props));
@@ -121,7 +121,7 @@ describe("PIXI Composite components", function() {
     // we need to fall back on the default DOM behavior for nodes that are
     // not PIXI elements. So we'll do the same tests as above but with DOM nodes
 
-    var injectedKeyFactory = React.createFactory(createReactClass({
+    var injectedKeyFactory = React.createFactory(React.createClass({
       displayName: 'injectedKeyComponent',
       render : function() {
         var propswithkey = _.clone(this.props);
@@ -129,7 +129,7 @@ describe("PIXI Composite components", function() {
         return React.createElement('div', propswithkey);
       }
     }));
-    var injectedKeyStageFactory = React.createFactory(createReactClass({
+    var injectedKeyStageFactory = React.createFactory(React.createClass({
       displayName: 'injectedKeyStage',
       render: function () {
         return React.createElement('div', {ref:'rootnode'},
